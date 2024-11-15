@@ -112,6 +112,18 @@ def clean_submissions(extracted_data_filepath):
         # Use a list to accumulate valid lines for batch writing
         valid_lines = []
 
+        # Use strings to identify deleted or removed post components
+        deleted_or_removed = [
+            "[deleted]",
+            "deleted",
+            "[deleted",
+            "deleted]",
+            "[removed]",
+            "removed",
+            "[removed",
+            "removed]"
+            ]
+
         # Enumerate through each line in the input file
         for line in infile:
 
@@ -126,6 +138,13 @@ def clean_submissions(extracted_data_filepath):
                     log.debug(f"Skipping line due to length: {obj}")
 
                     continue
+
+                # If the body was deleted or removed, set it None
+                if obj["body"] in deleted_or_removed:
+
+                    log.debug(f"Skipping line due to length: {obj}")
+
+                    obj["body"] = None
 
                 # If no errors, accumulate the valid line
                 valid_lines.append(json.dumps(obj))
@@ -158,6 +177,7 @@ if __name__ == "__main__":
 
     # Open the config JSON file
     with open("./scripts/prep_data_config.json", 'r') as file:
+
         # Read the data into a dictionary
         config = json.load(file)
 

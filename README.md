@@ -28,6 +28,14 @@ If you would like to modify the information extracted, change the values located
 **Command:**  `python ./scripts/prep_data.py`
 
 After extracting the data we are left information we don't want to feed into the model. Some examples include posts by the reddit AutoModerator bot, extremely short posts that don't contain much text and removed comments. This script is responsible for removing this data before feeding it into the transformer model.
+### Step 4: Extracting the entities
+**Command:**  `python ./scripts/extract_entities.py`
+
+Now that we have data prepped for the model, we can use the transformer model to extract entities and their relationships. We use Bablescape's Rebel Large model (the original paper can be found [here](https://github.com/Babelscape/rebel/blob/main/docs/EMNLP_2021_REBEL__Camera_Ready_.pdf)) to extract entities and their relationships. The script will attempt to utilize a GPU if it is present, and will fallback to the CPU if a GPU is not available for running the model.
+
+The python script relies on two configuration files:
+- `extract_entities_config.json`: Identifies the correct files and directories to use as inputs for the model.
+- `extract_entities_progress.json`: Tracks progress for entity extraction, allowing the user to stop and start the script if they are using less-powerful computer hardware.
 ## Python Environment Setup
 Some useful commands for setting up the python environment are included below. The requirements.txt file contains the packages used for this project as well. Package versions are locked for stability.
 - Create the python environment: ```python3 -m venv .conspiracy_graph_env```
