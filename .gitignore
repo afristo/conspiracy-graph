@@ -1,5 +1,8 @@
-# Training Data
-data/*
+# Model Data
+data/extracted_data/*.jsonl
+data/knowledge_graph_entities/*.jsonl
+data/prepped_data/*.jsonl
+data/raw_data/*.zst
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
