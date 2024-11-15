@@ -5,8 +5,6 @@ import zstandard
 from datetime import datetime, timezone
 import logging.handlers
 import json
-import time
-import sys
 import os
 
 # Set up logging configuration

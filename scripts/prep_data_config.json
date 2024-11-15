@@ -1,0 +1,14 @@
+{
+    "Conspiracy Theories Submissions": {
+        "path": "./data/extracted_data/conspiracytheories_submissions.jsonl"
+    },
+    "Conspiracy Theories Comments": {
+        "path": "./data/extracted_data/conspiracytheories_comments.jsonl"
+    },
+    "Conspiracy Submissions": {
+        "path": "./data/extracted_data/conspiracy_submissions.jsonl"
+    },
+    "Conspiracy Comments": {
+        "path": "./data/extracted_data/conspiracy_comments.jsonl"
+    }
+}

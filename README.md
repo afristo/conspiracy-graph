@@ -24,6 +24,10 @@ Archived reddit post and comment data was pulled from [The-Eye: Reddit Archive](
 The structure of the raw .zst files is contained in the `data/data_models/` directory. If you want to extract the same information used for the knowledge graphs, simply run the command shown above.
 
 If you would like to modify the information extracted, change the values located in `/scripts/extract_data_config.json` file. This will allow the python script to extract different keys from the raw files.
+### Step 3: Prepping Model Data
+**Command:**  `python ./scripts/prep_data.py`
+
+After extracting the data we are left information we don't want to feed into the model. Some examples include posts by the reddit AutoModerator bot, extremely short posts that don't contain much text and removed comments. This script is responsible for removing this data before feeding it into the transformer model.
 ## Python Environment Setup
 Some useful commands for setting up the python environment are included below. The requirements.txt file contains the packages used for this project as well. Package versions are locked for stability.
 - Create the python environment: ```python3 -m venv .conspiracy_graph_env```
