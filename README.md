@@ -7,36 +7,12 @@
 	- `knowledge_graph_entities/`: Contains the outputs of the transformer model with the extracted entities and corresponding relationships to build the knowledge graph.
 	- `prepped_data/`: Contains the cleaned up extracted data we will use as inputs for the transformer model (e.g. AutoModerator comments removed, short posts removed, etc.).
 	- `raw_data/`: Contains the original, compressed files pulled from [The-Eye: Reddit Archive](https://the-eye.eu/redarcs/).
-- `scripts/`: Contains the python code used to extract the raw data, prep the extracted data, and use the transformer models to identify the entities and relationships for the knowledge graph.
+- `scripts/`: Contains the python code used to extract the raw data, prep the extracted data, validate availability of GPUs for the transformer models and use the transformer models to identify the entities and relationships for the knowledge graph.
 ## Replication, Creating the Knowledge Graphs
-The code contained in this repository can be used to regenerate the knowledge graphs, or slightly modified to build similar knowledge graphs for other subreddits. The steps to do so are outlined below:
-### Step 1: Sourcing the data
-Archived reddit post and comment data was pulled from [The-Eye: Reddit Archive](https://the-eye.eu/redarcs/). The following files were manually downloaded to the `data/raw_data/` directory. As mentioned above, some of the data was not uploaded to Github due to the sheer size of files.
-#### r/conspiracy
-- Posts: https://the-eye.eu/redarcs/files/conspiracy_submissions.zst
-- Comments: https://the-eye.eu/redarcs/files/conspiracy_comments.zst
-#### r/conspiracytheories
-- Posts: https://the-eye.eu/redarcs/files/conspiracytheories_submissions.zst
-- Comments: https://the-eye.eu/redarcs/files/conspiracytheories_comments.zst
-### Step 2: Extracting Relevant Data
-**Command:** `python ./scripts/extract_data.py`
+The code contained in this repository can be used to regenerate the knowledge graphs, or be slightly modified to build similar knowledge graphs for other subreddits. The steps to do so are outlined below:
+### Step 1: Python Environment Setup
+This project was developed using Python 3.12.6. Other versions may have compatibility issues, specifically with pytorch and other dependencies.
 
-The structure of the raw .zst files is contained in the `data/data_models/` directory. If you want to extract the same information used for the knowledge graphs, simply run the command shown above.
-
-If you would like to modify the information extracted, change the values located in `/scripts/extract_data_config.json` file. This will allow the python script to extract different keys from the raw files.
-### Step 3: Prepping Model Data
-**Command:**  `python ./scripts/prep_data.py`
-
-After extracting the data we are left information we don't want to feed into the model. Some examples include posts by the reddit AutoModerator bot, extremely short posts that don't contain much text and removed comments. This script is responsible for removing this data before feeding it into the transformer model.
-### Step 4: Extracting the entities
-**Command:**  `python ./scripts/extract_entities.py`
-
-Now that we have data prepped for the model, we can use the transformer model to extract entities and their relationships. We use Bablescape's Rebel Large model (the original paper can be found [here](https://github.com/Babelscape/rebel/blob/main/docs/EMNLP_2021_REBEL__Camera_Ready_.pdf)) to extract entities and their relationships. The script will attempt to utilize a GPU if it is present, and will fallback to the CPU if a GPU is not available for running the model.
-
-The python script relies on two configuration files:
-- `extract_entities_config.json`: Identifies the correct files and directories to use as inputs for the model.
-- `extract_entities_progress.json`: Tracks progress for entity extraction, allowing the user to stop and start the script if they are using less-powerful computer hardware.
-## Python Environment Setup
 Some useful commands for setting up the python environment are included below. The requirements.txt file contains the packages used for this project as well. Package versions are locked for stability.
 - Create the python environment: ```python3 -m venv .conspiracy_graph_env```
 - Activate the environment: ```source .conspiracy_graph_env/bin/activate```
@@ -45,3 +21,37 @@ Some useful commands for setting up the python environment are included below. T
 - Deactivate it: `deactivate`
 - Save packages: `pip freeze > requirements.txt`
 - Recreate environment: `pip install -r requirements.txt`
+
+If utilizing a GPU, use the [PyTorch docs](https://pytorch.org/get-started/locally/) to install the relevant torch versions and packages.
+
+- Uninstall Torch: `pip uninstall torch torchvision torchaudio`
+- Install Torch w/ Cuda Libraries (example): `pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118`
+- Validate Torch and GPU Setup: `./scripts/gpu_validation.py`
+### Step 2: Sourcing the data
+Archived reddit post and comment data was pulled from [The-Eye: Reddit Archive](https://the-eye.eu/redarcs/). The following files were manually downloaded to the `data/raw_data/` directory. As mentioned above, some of the data was not uploaded to Github due to the sheer size of files.
+#### r/conspiracy
+- Posts: https://the-eye.eu/redarcs/files/conspiracy_submissions.zst
+- Comments: https://the-eye.eu/redarcs/files/conspiracy_comments.zst
+#### r/conspiracytheories
+- Posts: https://the-eye.eu/redarcs/files/conspiracytheories_submissions.zst
+- Comments: https://the-eye.eu/redarcs/files/conspiracytheories_comments.zst
+### Step 3: Extracting Relevant Data
+**Command:** `python ./scripts/extract_data.py`
+
+The structure of the raw .zst files is contained in the `data/data_models/` directory. If you want to extract the same information used for the knowledge graphs, simply run the command shown above.
+
+If you would like to modify the information extracted, change the values located in `/scripts/extract_data_config.json` file. This will allow the python script to extract different keys from the raw files.
+### Step 4: Prepping Model Data
+**Command:**  `python ./scripts/prep_data.py`
+
+After extracting the data we are left information we don't want to feed into the model. Some examples include posts by the reddit AutoModerator bot, extremely short posts that don't contain much text and removed comments. This script is responsible for removing this data before feeding it into the transformer model.
+### Step 5: Extracting the entities
+**Command:**  `python ./scripts/extract_entities.py`
+
+Now that we have data prepped for the model, we can use the transformer model to extract entities and their relationships. We use Bablescape's Rebel Large model (the original paper can be found [here](https://github.com/Babelscape/rebel/blob/main/docs/EMNLP_2021_REBEL__Camera_Ready_.pdf)) to extract entities and their relationships. The script will attempt to utilize a GPU if it is present, and will fallback to the CPU if a GPU is not available for running the model.
+
+The python script relies on two configuration files:
+- `extract_entities_config.json`: Identifies the correct files and directories to use as inputs for the model.
+- `extract_entities_progress.json`: Tracks progress for entity extraction, allowing the user to stop and start the script if they are using less-powerful compute hardware.
+
+Note: Due to time and compute limits, only entities and relationships from r/conspiracytheories were extracted.
