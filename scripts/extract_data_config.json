@@ -46,5 +46,53 @@
             {"score": "score"},
             {"created_utc": "created"}
         ]
+    },
+    "Conspiracy II Submissions": {
+        "path": "./data/raw_data/ConspiracyII_submissions.zst",
+        "values": [
+            {"title": "title"},
+            {"selftext": "body"},
+            {"num_comments": "number_of_comments"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"},
+            {"permalink": "reddit_url"}
+        ]
+    },
+    "Conspiracy II Comments": {
+        "path": "./data/raw_data/ConspiracyII_comments.zst",
+        "values": [
+            {"author": "author"},
+            {"body": "body"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"}
+        ]
+    },
+    "Conspiracy Commons Submissions": {
+        "path": "./data/raw_data/conspiracy_commons_submissions.zst",
+        "values": [
+            {"title": "title"},
+            {"selftext": "body"},
+            {"num_comments": "number_of_comments"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"},
+            {"permalink": "reddit_url"}
+        ]
+    },
+    "Conspiracy Commons Comments": {
+        "path": "./data/raw_data/conspiracy_commons_comments.zst",
+        "values": [
+            {"author": "author"},
+            {"body": "body"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"}
+        ]
     }
 }
