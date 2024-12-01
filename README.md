@@ -35,6 +35,12 @@ Archived reddit post and comment data was pulled from [The-Eye: Reddit Archive](
 #### r/conspiracytheories
 - Posts: https://the-eye.eu/redarcs/files/conspiracytheories_submissions.zst
 - Comments: https://the-eye.eu/redarcs/files/conspiracytheories_comments.zst
+#### r/conspiracy_commons
+- Posts: https://the-eye.eu/redarcs/files/conspiracy_commons_submissions.zst
+- Comments: https://the-eye.eu/redarcs/files/conspiracy_commons_comments.zst
+#### r/conspiracyII
+- Posts: https://the-eye.eu/redarcs/files/ConspiracyII_submissions.zst
+- Comments: https://the-eye.eu/redarcs/files/ConspiracyII_comments.zst
 ### Step 3: Extracting Relevant Data
 **Command:** `python ./scripts/extract_data.py`
 
