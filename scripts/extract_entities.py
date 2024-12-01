@@ -5,7 +5,6 @@ import torch
 # Import native libraries
 import logging
 import json
-import sys
 import os
 
 # Set up logging configuration for concise console output
@@ -46,9 +45,9 @@ def update_progress_config(key_path, value):
 
             else:
 
-                print(f"Key path '{' -> '.join(key_path)}' not found in the JSON file.")
+                print(f"Key path \"{" -> ".join(key_path)}\" not found in the JSON file.")
 
-                # Exit if any key in the path doesn't exist
+                # Exit if any key in the path doesn"t exist
                 return
 
         # Update the value of the last key
@@ -60,7 +59,7 @@ def update_progress_config(key_path, value):
 
         else:
 
-            print(f"Key '{last_key}' not found in the JSON file.")
+            print(f"Key \"{last_key}\" not found in the JSON file.")
 
             return
 
@@ -74,7 +73,7 @@ def update_progress_config(key_path, value):
                 indent=4 # Save with indentation for readability
                 )
 
-        print(f"Updated key path '{' -> '.join(key_path)}' with value '{value}' in {json_file_path}.")
+        print(f"Updated key path \"{' -> '.join(key_path)}\" with value \"{value}\" in {json_file_path}.")
 
     except FileNotFoundError:
 
@@ -102,10 +101,10 @@ def extract_triplets(text):
     triplets = []
 
     # Initialize components for each triplet
-    relation, subject, object_ = '', '', ''
+    relation, subject, object_ = "", "", ""
 
     # Keeps track of the part of the triplet currently being processed
-    current = 'x'
+    current = "x"
 
     # Process tokens, removing extra markers
     for token in text.replace("<s>", "").replace("<pad>", "").replace("</s>", "").split():
@@ -113,51 +112,51 @@ def extract_triplets(text):
         if token == "<triplet>":
 
             # Start of a new triplet; save previous triplet if it exists
-            current = 't'
+            current = "t"
 
             if relation:
 
-                triplets.append({'head': subject.strip(), 'type': relation.strip(), 'tail': object_.strip()})
+                triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
 
-                relation, subject, object_ = '', '', ''  # Reset for the next triplet
+                relation, subject, object_ = "", "", ""  # Reset for the next triplet
 
         elif token == "<subj>":
 
             # Start of a subject
-            current = 's'
+            current = "s"
 
             if relation:
 
-                triplets.append({'head': subject.strip(), 'type': relation.strip(), 'tail': object_.strip()})
+                triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
 
-                subject, object_ = '', ''  # Reset object
+                subject, object_ = "", ""  # Reset object
 
         elif token == "<obj>":
 
             # Start of an object
-            current = 'o'
+            current = "o"
 
-            relation = ''  # Reset relation
+            relation = ""  # Reset relation
 
         else:
 
             # Accumulate tokens into the appropriate triplet component
-            if current == 't':
+            if current == "t":
 
-                subject += ' ' + token
+                subject += " " + token
 
-            elif current == 's':
+            elif current == "s":
 
-                object_ += ' ' + token
+                object_ += " " + token
 
-            elif current == 'o':
+            elif current == "o":
 
-                relation += ' ' + token
+                relation += " " + token
 
     # Append the last triplet if valid
     if subject and relation and object_:
 
-        triplets.append({'head': subject.strip(), 'type': relation.strip(), 'tail': object_.strip()})
+        triplets.append({"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()})
     
     return triplets
 
@@ -179,7 +178,7 @@ def prep_model_inputs(tokenizer, model, gen_kwargs, text):
         max_length=256,
         padding=True,
         truncation=True,
-        return_tensors='pt'
+        return_tensors="pt"
     )
     
     # Generate output predictions from the model in batch
@@ -193,12 +192,12 @@ def prep_model_inputs(tokenizer, model, gen_kwargs, text):
     return tokenizer.batch_decode(generated_tokens, skip_special_tokens=False)
 
 
-def process_file(file_name, file_path, tokenizer, model):
+def process_file(file_name, input_file_path, tokenizer, model):
     """
     Processes a JSONL file, extracts triplets, and writes them in batches to an output file.
     
     :param file_name: The name of the type of data to process.
-    :param file_path: Path to the input JSONL file.
+    :param input_file_path: Path to the input JSONL file.
     :param tokenizer: The tokenizer to encode text.
     :param model: The model for generating predictions.
     """
@@ -223,8 +222,19 @@ def process_file(file_name, file_path, tokenizer, model):
         # Determine what line we were last on
         start_line_num = int(progress_config[file_name]["line"])
 
+    # Split the path into components
+    directory, filename = os.path.split(input_file_path)
+
+    # Replace the directory from "raw_data" to "prepped_data"
+    new_directory = directory.replace("prepped_data", "knowledge_graph_entities")
+
+    new_filename = filename.replace("_prepped", "_entities")
+
+    # Construct the new file path
+    output_file_path = os.path.join(new_directory, new_filename)
+
     # Open and read the JSONL file
-    with open(file_path, 'r') as input_file, open("./data/knowledge_graph_entities/entities.jsonl", 'w') as output_file:
+    with open(input_file_path, "r") as input_file, open(output_file_path, "w") as output_file:
 
         # Set the line number for logging
         line_num = 0
@@ -246,15 +256,10 @@ def process_file(file_name, file_path, tokenizer, model):
             # Set an empty list to store the extracted text
             text_to_extract = []
 
-            # Check if the "title" key in the dictionary exists and is populated with an useful value
-            if data.get("title"):
+            # Check if the "text" key in the dictionary exists and is populated with an useful value
+            if data.get("text"):
 
-                text_to_extract.append(data["title"])
-
-            # Check if the "body" key in the dictionary exists and is populated with an useful value
-            if data.get("body"):
-
-                text_to_extract.append(data["body"])
+                text_to_extract.append(data["text"])
 
             # If there is text to extract, run the model
             if len(text_to_extract) > 0:
@@ -287,7 +292,7 @@ def process_file(file_name, file_path, tokenizer, model):
                 for triplet in triplet_batches:
 
                     # Write the triplet to the output file
-                    output_file.write(json.dumps(triplet) + '\n')
+                    output_file.write(json.dumps(triplet) + "\n")
 
                 # Update the config with our progress
                 update_progress_config(
@@ -308,7 +313,7 @@ def process_file(file_name, file_path, tokenizer, model):
             for triplet in triplet_batches:
 
                 # Write the triplet to the output file
-                output_file.write(json.dumps(triplet) + '\n')
+                output_file.write(json.dumps(triplet) + "\n")
 
             # Update the config with our progress
             update_progress_config(
@@ -344,13 +349,13 @@ if __name__ == "__main__":
     model = model.to(device)
 
     # Open the config JSON file
-    with open("./scripts/extract_entities_config.json", 'r') as config_file:
+    with open("./scripts/extract_entities_config.json", "r") as config_file:
 
         # Read the data into a dictionary
         config = json.load(config_file)
 
     # Open the config JSON file
-    with open("./scripts/extract_entities_progress.json", 'r') as progress_file:
+    with open("./scripts/extract_entities_progress.json", "r") as progress_file:
 
         # Read the data into a dictionary
         progress_config = json.load(progress_file)
