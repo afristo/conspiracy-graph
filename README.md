@@ -4,6 +4,7 @@
 -  `data/`: Where all data is written. For many of the directories, the files are incredibly large. In this case, the directories are uploaded to github but the files are included in the .gitignore file.
 	- `data_models/`: Contains basic json files representing individual lines of the raw, compressed .zst files.
 	- `extracted_data/` Contains the data extracted from the raw files (e.g. creation timestamp, links to original posts, the body of the posts, etc.).
+	- `knowledge_graph/`: Contains the final data for visualizing the knowledge graph.
 	- `knowledge_graph_entities/`: Contains the outputs of the transformer model with the extracted entities and corresponding relationships to build the knowledge graph.
 	- `prepped_data/`: Contains the cleaned up extracted data we will use as inputs for the transformer model (e.g. AutoModerator comments removed, short posts removed, etc.).
 	- `raw_data/`: Contains the original, compressed files pulled from [The-Eye: Reddit Archive](https://the-eye.eu/redarcs/).
