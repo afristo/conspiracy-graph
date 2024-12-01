@@ -1,9 +1,25 @@
 {
+    "Conspiracy II Submissions": {
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy II Comments": {
+        "status": false,
+        "line": 0
+    },
     "Conspiracy Theories Submissions": {
         "status": false,
         "line": 0
     },
     "Conspiracy Theories Comments": {
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Commons Submissions": {
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Commons Comments": {
         "status": false,
         "line": 0
     },
