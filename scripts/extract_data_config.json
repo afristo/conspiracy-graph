@@ -1,52 +1,4 @@
 {
-    "Conspiracy Theories Submissions": {
-        "path": "./data/raw_data/conspiracytheories_submissions.zst",
-        "values": [
-            {"title": "title"},
-            {"selftext": "body"},
-            {"num_comments": "number_of_comments"},
-            {"ups": "upvotes"},
-            {"downs": "downvotes"},
-            {"score": "score"},
-            {"created_utc": "created"},
-            {"permalink": "reddit_url"}
-        ]
-    },
-    "Conspiracy Theories Comments": {
-        "path": "./data/raw_data/conspiracytheories_comments.zst",
-        "values": [
-            {"author": "author"},
-            {"body": "body"},
-            {"ups": "upvotes"},
-            {"downs": "downvotes"},
-            {"score": "score"},
-            {"created_utc": "created"}
-        ]
-    },
-    "Conspiracy Submissions": {
-        "path": "./data/raw_data/conspiracy_submissions.zst",
-        "values": [
-            {"title": "title"},
-            {"selftext": "body"},
-            {"num_comments": "number_of_comments"},
-            {"ups": "upvotes"},
-            {"downs": "downvotes"},
-            {"score": "score"},
-            {"created_utc": "created"},
-            {"permalink": "reddit_url"}
-        ]
-    },
-    "Conspiracy Comments": {
-        "path": "./data/raw_data/conspiracy_comments.zst",
-        "values": [
-            {"author": "author"},
-            {"body": "body"},
-            {"ups": "upvotes"},
-            {"downs": "downvotes"},
-            {"score": "score"},
-            {"created_utc": "created"}
-        ]
-    },
     "Conspiracy II Submissions": {
         "path": "./data/raw_data/ConspiracyII_submissions.zst",
         "values": [
@@ -71,6 +23,30 @@
             {"created_utc": "created"}
         ]
     },
+    "Conspiracy Theories Submissions": {
+        "path": "./data/raw_data/conspiracytheories_submissions.zst",
+        "values": [
+            {"title": "title"},
+            {"selftext": "body"},
+            {"num_comments": "number_of_comments"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"},
+            {"permalink": "reddit_url"}
+        ]
+    },
+    "Conspiracy Theories Comments": {
+        "path": "./data/raw_data/conspiracytheories_comments.zst",
+        "values": [
+            {"author": "author"},
+            {"body": "body"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"}
+        ]
+    },
     "Conspiracy Commons Submissions": {
         "path": "./data/raw_data/conspiracy_commons_submissions.zst",
         "values": [
@@ -86,6 +62,30 @@
     },
     "Conspiracy Commons Comments": {
         "path": "./data/raw_data/conspiracy_commons_comments.zst",
+        "values": [
+            {"author": "author"},
+            {"body": "body"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"}
+        ]
+    },
+    "Conspiracy Submissions": {
+        "path": "./data/raw_data/conspiracy_submissions.zst",
+        "values": [
+            {"title": "title"},
+            {"selftext": "body"},
+            {"num_comments": "number_of_comments"},
+            {"ups": "upvotes"},
+            {"downs": "downvotes"},
+            {"score": "score"},
+            {"created_utc": "created"},
+            {"permalink": "reddit_url"}
+        ]
+    },
+    "Conspiracy Comments": {
+        "path": "./data/raw_data/conspiracy_comments.zst",
         "values": [
             {"author": "author"},
             {"body": "body"},
