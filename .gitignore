@@ -1,14 +1,14 @@
 # Data
 data/extracted_data/*
 !data/extracted_data/.gitkeep
-data/knowledge_graph/*
-!data/knowledge_graph/.gitkeep
-data/knowledge_graph_entities/*
-!data/knowledge_graph_entities/.gitkeep
+data/final_graph/*
+!data/final_graph/.gitkeep
 data/prepped_data/*
 !data/prepped_data/.gitkeep
 data/raw_data/*
 !data/raw_data/.gitkeep
+data/raw_entities/*
+!data/raw_entities/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
