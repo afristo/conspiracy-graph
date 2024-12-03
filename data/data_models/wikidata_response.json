@@ -1,0 +1,83 @@
+[
+    {
+        "id": "Q881",
+        "title": "Q881",
+        "pageid": 1202,
+        "concepturi": "http://www.wikidata.org/entity/Q881",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q881",
+        "display": {
+            "label": {
+            "value": "Vietnam",
+            "language": "en"
+            },
+        "description": {
+            "value": "country in Southeast Asia",
+            "language": "en"
+            }
+        },
+        "label": "Vietnam",
+        "description": "country in Southeast Asia",
+        "match": {
+            "type": "alias",
+            "language": "en",
+            "text": "Socialist Republic of Vietnam"
+        },
+        "aliases": [
+            "Socialist Republic of Vietnam"
+        ]
+    },
+    {
+        "id": "Q83286",
+        "title": "Q83286",
+        "pageid": 85687,
+        "concepturi": "http://www.wikidata.org/entity/Q83286",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q83286",
+        "display": {
+            "label": {
+            "value": "Socialist Federal Republic of Yugoslavia",
+            "language": "en"
+            },
+        "description": {
+            "value": "Central and Southeast European socialist state (1945–1992)",
+            "language": "en"
+            }
+        },
+        "label": "Socialist Federal Republic of Yugoslavia",
+        "description": "Central and Southeast European socialist state (1945–1992)",
+        "match": {
+            "type": "label",
+            "language": "en",
+            "text": "Socialist Federal Republic of Yugoslavia"
+        }
+    },
+    {
+        "id": "Q853348",
+        "title": "Q853348",
+        "pageid": 805158,
+        "concepturi": "http://www.wikidata.org/entity/Q853348",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q853348",
+        "display": {
+            "label": {
+            "value": "Czechoslovak Socialist Republic",
+            "language": "en"
+            },
+        "description": {
+            "value": "republic in Central/Eastern Europe between 1960 and 1990",
+            "language": "en"
+            }
+        },
+        "label": "Czechoslovak Socialist Republic",
+        "description": "republic in Central/Eastern Europe between 1960 and 1990",
+        "match": {
+            "type": "alias",
+            "language": "en",
+            "text": "Socialist Republic of Czechoslovakia"
+        },
+        "aliases": [
+            "Socialist Republic of Czechoslovakia"
+        ]
+    }
+]

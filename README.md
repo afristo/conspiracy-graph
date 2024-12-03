@@ -64,14 +64,10 @@ Now that we have data prepped for the model, we can use the transformer model to
 The python script relies on two configuration files:
 - `extract_entities_config.json`: Identifies the correct files and directories to use as inputs for the model.
 - `extract_entities_progress.json`: Tracks progress for entity extraction, allowing the user to stop and start the script if they are using less-powerful compute hardware.
-
-Note: Due to time and compute limits, only entities and relationships from r/conspiracytheories were extracted.
-### Step 6: Building the Knowledge Graph
-**Command:**  `python ./scripts/build_knowledge_graph.py`
+### Step 6: Filter the Entities
+**Command:**  `python ./scripts/filter_entities/filter_entities.py`
 
 The extracted entities are often useless. For example, the entity "bro" linked to "person" is not really useful in understanding conspiracy theory structure. Furthermore, we need to conduct entity linking. This is done by:
 1. Sending our raw entities to Wikidata to find established concepts.
 2. Removing concepts that do not pass a similarity (levenstein distance) filter (e.g. if I query "Household", we would drop the result "Tractor" since it is not similar, but we would keep "House").
-3. Take the most similar concept of the remaining options (e.g. if we queried "Household" and we still have the results "Home", "Housing Crisis" and "Homestead", we take "House").
-
-The above process for entity linking also filters out concepts that are not easily mapped to the Wikidata knowledge base. We then "collapse" and normalize graph nodes/edges for the final knowledge graph. This is done by assigning higher "strength" to node pairs that are mentioned more often (e.g. if the pair "Elon" and "Twitter" is mentioned 5 times, it gets a strength of 5, which is then normalized relative to all raw strength scores).
+3. Take the most similar concept of the remaining options (e.g. if we queried "Household" and we still have the results "Home", "Housing Crisis" and "Homestead" after implementing out similarity filter, we take "House" because it has the best similarity score).

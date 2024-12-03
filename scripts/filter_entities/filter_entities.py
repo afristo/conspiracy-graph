@@ -31,7 +31,7 @@ def update_progress_config(key_path, value):
     """
 
     # Set the path for the config file
-    json_file_path = "./scripts/filter_entities/filter_entities.json"
+    json_file_path = "./scripts/filter_entities/filter_entities_config.json"
 
     # Load the JSON progress file
     with open(json_file_path, "r") as progress_file:
@@ -148,82 +148,65 @@ def filter_wikidata_results(original_name, wikidata_results, threshold):
     return best_match
 
 
-def filter_entities(file, input_file, output_file, threshold, current_line):
+def process_and_link_entities(file, input_file, output_file, threshold, current_line):
     """
     Process a knowledge graph by reading input data, linking entities to Wikidata,
     collapsing duplicate edges, and normalizing edge strengths.
 
+    :param file: Name of the file being processed (used for logging and progress tracking).
     :param input_file: Path to the input .jsonl file containing knowledge graph data.
     :param output_file: Path to the output .jsonl file to save processed graph data.
     :param threshold: The minimum similarity score for entity linking (0-100).
+    :param current_line: Line number from which to resume processing.
     """
-
-    # Store the list of triples
-    triplets = []
 
     logging.info(f"Starting entity filtering. Reading input from {input_file}")
 
-    # Open the file
-    with open(input_file, "r") as infile, open(output_file, "w") as out_file:
+    # Open input and output files
+    with open(input_file, "r") as infile, open(output_file, "a") as out_file:
 
-        line_number = 0
+        # Define line number
+        line_number = 1
 
-        # Enumerate the lines in the file
-        for line_number, line in enumerate(infile, start=line_number):
+        # Enumerate lines, starting from the last processed line
+        for line_number, line in enumerate(infile, start=1):
 
-            # Increment line counter for logging
-            line_number += 1
-
-            # Skip the line if we've already processed it
+            # If a line has already been processed, skip it
             if line_number < current_line:
 
+                # Skip already processed lines
                 continue
 
-            # Read in the record
+            # Parse the record
             record = json.loads(line)
             head = record["head"]
             tail = record["tail"]
 
-            # Log progress every 100 lines
-            if line_number % 100 == 0:
-
-                logging.info(f"Processed {line_number} lines...")
-
-                for triplet in triplets:
-
-                    json.dump(triplet, out_file)
-
-                    out_file.write("\n")
-
-                # Update the config with our progress
-                update_progress_config(
-                    key_path=[file, "line"],
-                    value=line_number
-                    )
-
-                # Clear the batches for the next round
-                triplets = []
-
-            # Entity linking for the head entity
+            # Entity linking for head and tail
             head_results = search_wikidata(head)
             linked_head = filter_wikidata_results(head, head_results, threshold)
 
-            # Entity linking for the tail entity
             tail_results = search_wikidata(tail)
             linked_tail = filter_wikidata_results(tail, tail_results, threshold)
 
-            # Add to triples if both entities were successfully linked
+            # If both the head and tail of the triplet were linked, add it to the file
             if linked_head and linked_tail:
 
-                triplets.append(
-                    {
-                        "linked_head": linked_head,
-                        "original_head": head,
-                        "type": record["type"],
-                        "linked_tail": linked_tail,
-                        "original_tail": tail
-                    }
-                )
+                # Create the triplet and write it directly to the file
+                triplet = {
+                    "linked_head": linked_head,
+                    "original_head": head,
+                    "type": record["type"],
+                    "linked_tail": linked_tail,
+                    "original_tail": tail
+                }
+
+                json.dump(triplet, out_file)
+
+                # Ensure newlines separate JSON objects
+                out_file.write("\n")
+
+                logging.debug(f"Wrote triplet to file: {triplet}")
 
             else:
 
@@ -231,23 +214,24 @@ def filter_entities(file, input_file, output_file, threshold, current_line):
                     f"Failed to link entities: head='{head}', tail='{tail}'. Skipping line {line_number}."
                 )
 
-        # If any triplets are left still, write them to the output file
-        if triplets:
+            # Log progress every 100 lines
+            if line_number % 100 == 0:
 
-            for triplet in triplets:
+                logging.info(f"Processed {line_number} lines...")
 
-                json.dump(triplet, out_file)
-
-                out_file.write("\n")
-
-            # Update the config with our progress
-            update_progress_config(
-                key_path=[file, "line"],
-                value=line_number
+                # Update progress in the config
+                update_progress_config(
+                    key_path=[file, "line"],
+                    value=line_number
                 )
 
-            # Clear the batches for the next round
-            triplets = []
+        # Final progress update
+        update_progress_config(
+            key_path=[file, "line"],
+            value=line_number
+        )
+
+    logging.info(f"Entity filtering completed. Output written to {output_file}.")
 
 
 if __name__ == "__main__":
@@ -288,9 +272,11 @@ if __name__ == "__main__":
         output_file = os.path.join(new_directory, new_filename)
 
         # Set the similarity threshold for Wikidata results
-        similarity_threshold = 80
+        similarity_threshold = 70
+
+        print(output_file)
 
         # Filter entities
-        filter_entities(file, input_file, output_file, similarity_threshold, current_line)
+        process_and_link_entities(file, input_file, output_file, similarity_threshold, current_line)
 
     logging.info("All entities filtered.")
