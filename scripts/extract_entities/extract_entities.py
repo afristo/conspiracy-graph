@@ -228,7 +228,7 @@ def process_file(file_name, input_file_path, tokenizer, model):
     # Replace the directory from "raw_data" to "prepped_data"
     new_directory = directory.replace("prepped_data", "raw_entities")
 
-    new_filename = filename.replace("_prepped", "_entities")
+    new_filename = filename.replace("_prepped", "_raw_entities")
 
     # Construct the new file path
     output_file_path = os.path.join(new_directory, new_filename)

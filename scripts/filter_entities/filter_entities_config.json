@@ -1,0 +1,42 @@
+{
+    "Conspiracy II Submissions Entities": {
+        "path": "./data/raw_entities/conspiracyII_submissions_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy II Comments Entities": {
+        "path": "./data/raw_entities/conspiracyII_comments_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Theories Submissions Entities": {
+        "path": "./data/raw_entities/conspiracytheories_submissions_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Theories Comments Entities": {
+        "path": "./data/raw_entities/conspiracytheories_comments_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Commons Submissions Entities": {
+        "path": "./data/raw_entities/conspiracy_commons_submissions_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Commons Comments Entities": {
+        "path": "./data/raw_entities/conspiracy_commons_comments_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Submissions Entities": {
+        "path": "./data/raw_entities/conspiracy_submissions_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    },
+    "Conspiracy Comments Entities": {
+        "path": "./data/raw_entities/conspiracy_comments_raw_entities.jsonl",
+        "status": false,
+        "line": 0
+    }
+}
