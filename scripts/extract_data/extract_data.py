@@ -191,7 +191,7 @@ if __name__ == "__main__":
     """
 
     # Open the config JSON file
-    with open("./scripts/extract_data_config.json", 'r') as file:
+    with open("./scripts/extract_data/extract_data_config.json", 'r') as file:
 
         # Read the data into a dictionary
         config = json.load(file)
