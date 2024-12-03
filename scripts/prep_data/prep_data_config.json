@@ -1,0 +1,34 @@
+{
+    "Conspiracy II Submissions": {
+        "path": "./data/extracted_data/ConspiracyII_submissions.jsonl",
+        "type": "submissions"
+    },
+    "Conspiracy II Comments": {
+        "path": "./data/extracted_data/ConspiracyII_comments.jsonl",
+        "type": "comments"
+    },
+    "Conspiracy Theories Submissions": {
+        "path": "./data/extracted_data/conspiracytheories_submissions.jsonl",
+        "type": "submissions"
+    },
+    "Conspiracy Theories Comments": {
+        "path": "./data/extracted_data/conspiracytheories_comments.jsonl",
+        "type": "comments"
+    },
+    "Conspiracy Commons Submissions": {
+        "path": "./data/extracted_data/conspiracy_commons_submissions.jsonl",
+        "type": "submissions"
+    },
+    "Conspiracy Commons Comments": {
+        "path": "./data/extracted_data/conspiracy_commons_comments.jsonl",
+        "type": "comments"
+    },
+    "Conspiracy Submissions": {
+        "path": "./data/extracted_data/conspiracy_submissions.jsonl",
+        "type": "submissions"
+    },
+    "Conspiracy Comments": {
+        "path": "./data/extracted_data/conspiracy_comments.jsonl",
+        "type": "comments"
+    }
+}

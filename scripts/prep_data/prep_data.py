@@ -191,7 +191,7 @@ if __name__ == "__main__":
     nlp = spacy.load("en_core_web_sm")
 
     # Open the config JSON file
-    with open("./scripts/prep_data_config.json", "r") as file:
+    with open("./scripts/prep_data/prep_data_config.json", "r") as file:
 
         # Read the data into a dictionary
         config = json.load(file)
