@@ -1,9 +1,9 @@
 {
     "Conspiracy II Submissions": {
-        "path": "./data/prepped_data/conspiracytheories_submissions_prepped.jsonl"
+        "path": "./data/prepped_data/conspiracyII_submissions_prepped.jsonl"
     },
     "Conspiracy II Comments": {
-        "path": "./data/prepped_data/conspiracytheories_comments_prepped.jsonl"
+        "path": "./data/prepped_data/conspiracyII_comments_prepped.jsonl"
     },
     "Conspiracy Theories Submissions": {
         "path": "./data/prepped_data/conspiracytheories_submissions_prepped.jsonl"
