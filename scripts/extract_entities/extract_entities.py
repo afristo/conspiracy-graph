@@ -24,7 +24,7 @@ def update_progress_config(key_path, value):
     """
 
     # Set the path for the config file
-    json_file_path = "./scripts/extract_entities_progress.json"
+    json_file_path = "./scripts/extract_entities/extract_entities_progress.json"
 
     try:
 
@@ -214,7 +214,7 @@ def process_file(file_name, input_file_path, tokenizer, model):
     }
 
     # Load the JSON progress file
-    with open("./scripts/extract_entities_progress.json", "r") as progress_file:
+    with open("./scripts/extract_entities/extract_entities_progress.json", "r") as progress_file:
 
         # Load the file as JSON
         progress_config = json.load(progress_file)
@@ -226,7 +226,7 @@ def process_file(file_name, input_file_path, tokenizer, model):
     directory, filename = os.path.split(input_file_path)
 
     # Replace the directory from "raw_data" to "prepped_data"
-    new_directory = directory.replace("prepped_data", "knowledge_graph_entities")
+    new_directory = directory.replace("prepped_data", "raw_entities")
 
     new_filename = filename.replace("_prepped", "_entities")
 
@@ -349,13 +349,13 @@ if __name__ == "__main__":
     model = model.to(device)
 
     # Open the config JSON file
-    with open("./scripts/extract_entities_config.json", "r") as config_file:
+    with open("./scripts/extract_entities/extract_entities_config.json", "r") as config_file:
 
         # Read the data into a dictionary
         config = json.load(config_file)
 
     # Open the config JSON file
-    with open("./scripts/extract_entities_progress.json", "r") as progress_file:
+    with open("./scripts/extract_entities/extract_entities_progress.json", "r") as progress_file:
 
         # Read the data into a dictionary
         progress_config = json.load(progress_file)
