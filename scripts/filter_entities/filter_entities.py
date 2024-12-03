@@ -50,7 +50,7 @@ def update_progress_config(key_path, value):
 
             else:
 
-                print(f"Key path \"{" -> ".join(key_path)}\" not found in the JSON file.")
+                logging.info(f"Key path \"{" -> ".join(key_path)}\" not found in the JSON file.")
 
                 # Exit if any key in the path doesn"t exist
                 return
@@ -64,7 +64,7 @@ def update_progress_config(key_path, value):
 
         else:
 
-            print(f"Key \"{last_key}\" not found in the JSON file.")
+            logging.info(f"Key \"{last_key}\" not found in the JSON file.")
 
             return
 
@@ -78,7 +78,7 @@ def update_progress_config(key_path, value):
                 indent=4 # Save with indentation for readability
                 )
 
-        print(f"Updated key path \"{' -> '.join(key_path)}\" with value \"{value}\" in {json_file_path}.")
+        logging.info(f"Updated key path \"{' -> '.join(key_path)}\" with value \"{value}\" in {json_file_path}.")
 
 
 def search_wikidata(entity_name):
@@ -130,8 +130,6 @@ def filter_wikidata_results(original_name, wikidata_results, threshold):
     # Initialize variables to track the best match
     best_match = None
     highest_similarity = 0
-
-    print("We got a total of " + str(len(wikidata_results)) + " results from wikidata")
 
     # Iterate through results to calculate similarity
     for result in wikidata_results:
