@@ -1,83 +1,189 @@
 [
     {
-        "id": "Q881",
-        "title": "Q881",
-        "pageid": 1202,
-        "concepturi": "http://www.wikidata.org/entity/Q881",
+        "id": "Q37230",
+        "title": "Q37230",
+        "pageid": 39768,
+        "concepturi": "http://www.wikidata.org/entity/Q37230",
         "repository": "wikidata",
-        "url": "//www.wikidata.org/wiki/Q881",
+        "url": "//www.wikidata.org/wiki/Q37230",
         "display": {
             "label": {
-            "value": "Vietnam",
-            "language": "en"
+                "value": "Central Intelligence Agency",
+                "language": "en"
             },
-        "description": {
-            "value": "country in Southeast Asia",
-            "language": "en"
+            "description": {
+                "value": "national intelligence agency of the United States",
+                "language": "en"
             }
         },
-        "label": "Vietnam",
-        "description": "country in Southeast Asia",
+        "label": "Central Intelligence Agency",
+        "description": "national intelligence agency of the United States",
         "match": {
             "type": "alias",
             "language": "en",
-            "text": "Socialist Republic of Vietnam"
+            "text": "CIA"
         },
         "aliases": [
-            "Socialist Republic of Vietnam"
+            "CIA"
         ]
     },
     {
-        "id": "Q83286",
-        "title": "Q83286",
-        "pageid": 85687,
-        "concepturi": "http://www.wikidata.org/entity/Q83286",
+        "id": "Q98099640",
+        "title": "Q98099640",
+        "pageid": 96384487,
+        "concepturi": "http://www.wikidata.org/entity/Q98099640",
         "repository": "wikidata",
-        "url": "//www.wikidata.org/wiki/Q83286",
+        "url": "//www.wikidata.org/wiki/Q98099640",
         "display": {
             "label": {
-            "value": "Socialist Federal Republic of Yugoslavia",
-            "language": "en"
+                "value": "Cia",
+                "language": "en"
             },
-        "description": {
-            "value": "Central and Southeast European socialist state (1945–1992)",
-            "language": "en"
+            "description": {
+                "value": "female given name",
+                "language": "en"
             }
         },
-        "label": "Socialist Federal Republic of Yugoslavia",
-        "description": "Central and Southeast European socialist state (1945–1992)",
+        "label": "Cia",
+        "description": "female given name",
         "match": {
             "type": "label",
             "language": "en",
-            "text": "Socialist Federal Republic of Yugoslavia"
+            "text": "Cia"
         }
     },
     {
-        "id": "Q853348",
-        "title": "Q853348",
-        "pageid": 805158,
-        "concepturi": "http://www.wikidata.org/entity/Q853348",
+        "id": "Q1132616",
+        "title": "Q1132616",
+        "pageid": 1079531,
+        "concepturi": "http://www.wikidata.org/entity/Q1132616",
         "repository": "wikidata",
-        "url": "//www.wikidata.org/wiki/Q853348",
+        "url": "//www.wikidata.org/wiki/Q1132616",
         "display": {
             "label": {
-            "value": "Czechoslovak Socialist Republic",
-            "language": "en"
+                "value": "Rome Ciampino",
+                "language": "en"
             },
-        "description": {
-            "value": "republic in Central/Eastern Europe between 1960 and 1990",
-            "language": "en"
+            "description": {
+                "value": "international airport serving Rome, Italy and the Vatican City",
+                "language": "en"
             }
         },
-        "label": "Czechoslovak Socialist Republic",
-        "description": "republic in Central/Eastern Europe between 1960 and 1990",
+        "label": "Rome Ciampino",
+        "description": "international airport serving Rome, Italy and the Vatican City",
         "match": {
             "type": "alias",
             "language": "en",
-            "text": "Socialist Republic of Czechoslovakia"
+            "text": "CIA"
         },
         "aliases": [
-            "Socialist Republic of Czechoslovakia"
+            "CIA"
+        ]
+    },
+    {
+        "id": "Q3468361",
+        "title": "Q3468361",
+        "pageid": 3303616,
+        "concepturi": "http://www.wikidata.org/entity/Q3468361",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q3468361",
+        "display": {
+            "label": {
+                "value": "Texas Woman's University",
+                "language": "en"
+            },
+            "description": {
+                "value": "education organization in Denton, Texas, United States",
+                "language": "en"
+            }
+        },
+        "label": "Texas Woman's University",
+        "description": "education organization in Denton, Texas, United States",
+        "match": {
+            "type": "alias",
+            "language": "en",
+            "text": "CIA"
+        },
+        "aliases": [
+            "CIA"
+        ]
+    },
+    {
+        "id": "Q314892",
+        "title": "Q314892",
+        "pageid": 302718,
+        "concepturi": "http://www.wikidata.org/entity/Q314892",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q314892",
+        "display": {
+            "label": {
+                "value": "Ciar\u00e1n Hinds",
+                "language": "en"
+            },
+            "description": {
+                "value": "British actor",
+                "language": "en"
+            }
+        },
+        "label": "Ciar\u00e1n Hinds",
+        "description": "British actor",
+        "match": {
+            "type": "label",
+            "language": "en",
+            "text": "Ciar\u00e1n Hinds"
+        }
+    },
+    {
+        "id": "Q203223",
+        "title": "Q203223",
+        "pageid": 199712,
+        "concepturi": "http://www.wikidata.org/entity/Q203223",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q203223",
+        "display": {
+            "label": {
+                "value": "Ciara",
+                "language": "en"
+            },
+            "description": {
+                "value": "American R&B singer",
+                "language": "en"
+            }
+        },
+        "label": "Ciara",
+        "description": "American R&B singer",
+        "match": {
+            "type": "label",
+            "language": "en",
+            "text": "Ciara"
+        }
+    },
+    {
+        "id": "Q4166619",
+        "title": "Q4166619",
+        "pageid": 3974603,
+        "concepturi": "http://www.wikidata.org/entity/Q4166619",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q4166619",
+        "display": {
+            "label": {
+                "value": "Cleveland Institute of Art",
+                "language": "en"
+            },
+            "description": {
+                "value": "art school in Cleveland",
+                "language": "en"
+            }
+        },
+        "label": "Cleveland Institute of Art",
+        "description": "art school in Cleveland",
+        "match": {
+            "type": "alias",
+            "language": "en",
+            "text": "CIA"
+        },
+        "aliases": [
+            "CIA"
         ]
     }
 ]

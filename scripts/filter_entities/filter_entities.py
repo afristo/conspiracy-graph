@@ -1,17 +1,27 @@
-# Import third-party libraries
-from fuzzywuzzy import fuzz
-import requests
-
 # Import native libraries
-from collections import defaultdict
 import logging
 import json
 import os
 
+# Import third-party libraries
+from fuzzywuzzy import fuzz
+import requests
+
+import sys
+
+# Set constant values for the script, enforcing them with a class
+class Constants:
+    """
+    A class specifically for enforcing constant values in the script.
+    """
+
+    CONFIG = "./scripts/filter_entities/filter_entities_config.json"
+    SIMILARITY_THRESHOLD = 70
+
 
 def setup_logging():
     """
-    Sets up logging configuration.
+    Sets up the logging configuration for the script.
     """
 
     # Set the logging config
@@ -30,11 +40,8 @@ def update_progress_config(key_path, value):
     :param value: The new value to assign to the key.
     """
 
-    # Set the path for the config file
-    json_file_path = "./scripts/filter_entities/filter_entities_config.json"
-
     # Load the JSON progress file
-    with open(json_file_path, "r") as progress_file:
+    with open(file=Constants.CONFIG, mode="r+", encoding="utf-8") as progress_file:
 
         progress_config = json.load(progress_file)
 
@@ -50,7 +57,7 @@ def update_progress_config(key_path, value):
 
             else:
 
-                logging.info(f"Key path \"{" -> ".join(key_path)}\" not found in the JSON file.")
+                logging.info("Key path \"%s\" not found in the JSON file.", " -> ".join(key_path))
 
                 # Exit if any key in the path doesn"t exist
                 return
@@ -64,69 +71,88 @@ def update_progress_config(key_path, value):
 
         else:
 
-            logging.info(f"Key \"{last_key}\" not found in the JSON file.")
+            logging.info("Key \"%s\" not found in the JSON file.", last_key)
 
             return
 
-        # Write the updated dictionary back to the file
-        with open(json_file_path, "w") as progress_file:
+        # Output the new config
+        progress_file.seek(0)
+        json.dump(progress_config, progress_file, indent=4)
 
-            # Output the new config
-            json.dump(
-                progress_config,
-                progress_file,
-                indent=4 # Save with indentation for readability
-                )
+        # Truncate the rest of the file if the new content is shorter
+        progress_file.truncate()
 
-        logging.info(f"Updated key path \"{' -> '.join(key_path)}\" with value \"{value}\" in {json_file_path}.")
+        logging.info("Updated key path \"%s\" with value \"%s\".", " -> ".join(key_path), value,)
 
 
-def search_wikidata(entity_name):
+def best_single_record_similarity(original_term, record):
     """
-    Query Wikidata for a given entity name.
+    Each Wikidata result contains a label and 0 or more aliases. This function gets the best
+    similarity from all of these. For example, if we search "CIA" we may get a result labeled
+    "Central Intelligence Agency" that has an alias "CIA". In this case, we want to take the
+    similarity for the alias "CIA", not the label "Central Intelligence Agency.
 
-    :param entity_name: The name of the entity to search for.
-    :return: A list of potential matches from Wikidata, each as a dictionary containing 'id', 'label', and other metadata.
+    :param original_term: The original search term to get results from Wikidata.
+    :param record: A single record from Wikidata with a label and potential aliases.
+    :return: The best similarity across the label and all aliases.
     """
 
-    # Set eh wikidata URL
+    # Extract the label and aliases
+    aliases = record.get("aliases", [])
+
+    # Combine the label and aliases into a single list
+    candidates = [record["label"]] + aliases
+
+    # Calculate the similarity for each candidate and track the highest
+    best_similarity = max(fuzz.ratio(candidate, original_term) for candidate in candidates)
+
+    return best_similarity
+
+
+def search_wikidata(term):
+    """
+    This function queries Wikidata with a value.
+
+    :param term: The term to search for.
+    :return: A list of dictionaries, containing the results of the search from Wikidata.
+    """
+
+    # Set the wikidata URL
     url = "https://www.wikidata.org/w/api.php"
-    
+
     # Set parameters for the call
     params = {
         "action": "wbsearchentities",
         "format": "json",
         "language": "en",
-        "search": entity_name,
+        "search": term,
     }
 
     # Send the request
-    response = requests.get(url, params=params)
+    response = requests.get(url=url, params=params, timeout=15)
 
     # If we get a successful response, return the response
     if response.status_code == 200:
 
-        results = response.json().get("search", [])
+        return response.json().get("search", [])
 
-        return results
-    
-    else:
+    logging.error("Error querying Wikidata for '%s': %s", term, response.status_code)
 
-        logging.error(f"Error querying Wikidata for '{entity_name}': {response.status_code}")
-
-        return []
+    return []
 
 
-def filter_wikidata_results(original_name, wikidata_results, threshold):
+def filter_wikidata_results(original_term, wikidata_results, threshold):
     """
-    Filter Wikidata search results based on Levenshtein similarity, 
-    retaining only results that meet the threshold and selecting the top match.
+    Filter Wikidata search results based on Levenshtein similarity, retaining only results that
+    meet the threshold and selecting the top match.
 
     :param original_name: The original name of the entity from the input data.
     :param wikidata_results: A list of Wikidata search results for the entity.
     :param threshold: The minimum similarity score to accept a match (0-100).
-    :return: The label of the best matching Wikidata entity if it meets the threshold; otherwise, None.
+    :return: The label of the best matching Wikidata entity if it meets the threshold; otherwise,
+    return None.
     """
+
     # Initialize variables to track the best match
     best_match = None
     highest_similarity = 0
@@ -134,11 +160,16 @@ def filter_wikidata_results(original_name, wikidata_results, threshold):
     # Iterate through results to calculate similarity
     for result in wikidata_results:
 
-        # Use levenstein similarity
-        similarity = fuzz.ratio(original_name, result["label"])
+        # For all labels and aliases for a single wikidata result, find the best similarity
+        similarity = best_single_record_similarity(original_term, result)
 
-        # Only consider matches that meet the threshold
-        if similarity >= threshold and similarity > highest_similarity:
+        # If a record has a perfect similarity, return it immediately
+        if similarity == 100:
+
+            return result["label"]
+
+        # Only consider matches that meet the threshold and are better than the current best match
+        if similarity > highest_similarity and similarity >= threshold:
 
             # Store the best match and similarity if the threshold is passed
             best_match = result["label"]
@@ -148,28 +179,31 @@ def filter_wikidata_results(original_name, wikidata_results, threshold):
     return best_match
 
 
-def process_and_link_entities(file, input_file, output_file, threshold, current_line):
+def process_and_link_entities(data_source_name, input_file_path, output_file_path, current_line):
     """
     Process a knowledge graph by reading input data, linking entities to Wikidata,
     collapsing duplicate edges, and normalizing edge strengths.
 
     :param file: Name of the file being processed (used for logging and progress tracking).
-    :param input_file: Path to the input .jsonl file containing knowledge graph data.
-    :param output_file: Path to the output .jsonl file to save processed graph data.
+    :param input_file: Path to the input .jsonl file containing raw knowledge graph entities.
+    :param output_file: Path to the output .jsonl file to save filtered knowledge graph entities.
     :param threshold: The minimum similarity score for entity linking (0-100).
     :param current_line: Line number from which to resume processing.
     """
 
-    logging.info(f"Starting entity filtering. Reading input from {input_file}")
+    logging.info("Starting entity filtering. Reading input from %s", input_file_path)
 
     # Open input and output files
-    with open(input_file, "r") as infile, open(output_file, "a") as out_file:
+    with open(file=input_file_path, mode="r", encoding="utf-8") as in_file, \
+        open(file=output_file_path, mode="a", encoding="utf-8") as out_file:
 
-        # Define line number
-        line_number = 1
+        # Set default starting line number
+        line_number = 0
 
-        # Enumerate lines, starting from the last processed line
-        for line_number, line in enumerate(infile, start=1):
+        # List to accumulate the triplets
+        triplets = []
+
+        for line_number, input_file_line in enumerate(iterable=in_file, start=line_number):
 
             # If a line has already been processed, skip it
             if line_number < current_line:
@@ -177,19 +211,27 @@ def process_and_link_entities(file, input_file, output_file, threshold, current_
                 # Skip already processed lines
                 continue
 
-            # Parse the record
-            record = json.loads(line)
+            # Load the entities
+            record = json.loads(input_file_line)
             head = record["head"]
             tail = record["tail"]
 
             # Entity linking for head and tail
             head_results = search_wikidata(head)
-            linked_head = filter_wikidata_results(head, head_results, threshold)
+            linked_head = filter_wikidata_results(
+                head,
+                head_results,
+                Constants.SIMILARITY_THRESHOLD
+                )
 
             tail_results = search_wikidata(tail)
-            linked_tail = filter_wikidata_results(tail, tail_results, threshold)
+            linked_tail = filter_wikidata_results(
+                tail,
+                tail_results,
+                Constants.SIMILARITY_THRESHOLD
+                )
 
-            # If both the head and tail of the triplet were linked, add it to the file
+            # If both the head and tail of the triplet were linked, add it to the list
             if linked_head and linked_tail:
 
                 # Create the triplet and write it directly to the file
@@ -201,65 +243,82 @@ def process_and_link_entities(file, input_file, output_file, threshold, current_
                     "original_tail": tail
                 }
 
-                json.dump(triplet, out_file)
-
-                # Ensure newlines separate JSON objects
-                out_file.write("\n")
-
-                logging.debug(f"Wrote triplet to file: {triplet}")
+                triplets.append(triplet)
 
             else:
 
                 logging.warning(
-                    f"Failed to link entities: head='{head}', tail='{tail}'. Skipping line {line_number}."
+                    "Failed to link entities: head=%s, tail=%s. Skipping line %s.",
+                    head,
+                    tail,
+                    line_number
                 )
 
             # Log progress every 100 lines
             if line_number % 100 == 0:
 
-                logging.info(f"Processed {line_number} lines...")
+                logging.info("Processed %s lines...", line_number)
+
+                # Write the accumulated triplets to the output file
+                if triplets:
+
+                    for triplet in triplets:
+
+                        json.dump(triplet, out_file)
+                        out_file.write("\n")
+
+                    # Clear the list after writing
+                    triplets.clear()
 
                 # Update progress in the config
                 update_progress_config(
-                    key_path=[file, "line"],
+                    key_path=[data_source_name, "line"],
                     value=line_number
                 )
 
+        # Final write if there are remaining triplets
+        if triplets:
+
+            for triplet in triplets:
+
+                json.dump(triplet, out_file)
+                out_file.write("\n")
+
+            # Clear the list after writing
+            triplets.clear()
+
         # Final progress update
         update_progress_config(
-            key_path=[file, "line"],
+            key_path=[data_source_name, "line"],
             value=line_number
         )
 
-    logging.info(f"Entity filtering completed. Output written to {output_file}.")
+    logging.info("Entity filtering completed. Output written to %s.", output_file_path)
 
 
 if __name__ == "__main__":
-    """
-    Main function to process JSONL files for entity linking.
-    """
 
     # Setup logging functionality
     setup_logging()
 
     # Load the JSON config file
-    with open("./scripts/filter_entities/filter_entities_config.json", "r") as config_file:
+    with open(file=Constants.CONFIG, mode="r", encoding="utf-8") as config_file:
 
         config = json.load(config_file)
 
     # Enumerate over the individual files we're going to process
-    for file in config:
+    for data_source in config:
 
-        logging.info(f"Filtering {file}")
+        logging.info("Filtering %s...", data_source)
 
-        # Do not process the file if we've already processed it
-        if config[file]["status"] == True:
+        # Do not process the file if we've already processed it (e.g. "True")
+        if config[data_source]["status"]:
 
             continue
 
         # Extract the filepath and current line we are on
-        input_file = config[file]["path"]
-        current_line = config[file]["line"]
+        input_file = config[data_source]["path"]
+        line = config[data_source]["line"]
 
         # Split the path into components
         directory, filename = os.path.split(input_file)
@@ -271,12 +330,7 @@ if __name__ == "__main__":
         # Construct the output file path
         output_file = os.path.join(new_directory, new_filename)
 
-        # Set the similarity threshold for Wikidata results
-        similarity_threshold = 70
-
-        print(output_file)
-
         # Filter entities
-        process_and_link_entities(file, input_file, output_file, similarity_threshold, current_line)
+        process_and_link_entities(data_source, input_file, output_file, line)
 
     logging.info("All entities filtered.")

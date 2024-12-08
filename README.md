@@ -3,16 +3,18 @@
 ## Repository Contents
 -  `data/`: Where all data is written. For many of the directories, the files are incredibly large. In this case, the directories are uploaded to github but the files are included in the .gitignore file.
 	- `data_models/`: Contains basic json files representing individual lines of the raw, compressed .zst files and the wikidata response json format.
-	- `extracted_data/` Contains the data extracted from the raw files (e.g. creation timestamp, links to original posts, the body of the posts, etc.).
+	- `extracted_data/`: Contains the data extracted from the raw files (e.g. creation timestamp, links to original posts, the body of the posts, etc.).
+	- `filtered_entities`: Contains the filtered knowledge graph entities.
 	- `final_graph/`: Contains the final data for visualizing the knowledge graph.
 	- `prepped_data/`: Contains the cleaned up extracted data we will use as inputs for the transformer model (e.g. AutoModerator comments removed, short posts removed, etc.).
 	- `raw_data/`: Contains the original, compressed files pulled from [The-Eye: Reddit Archive](https://the-eye.eu/redarcs/).
 	- `raw_entities/`: Contains the outputs of the transformer model with the extracted entities and corresponding relationships to build the knowledge graph.
 - `scripts/`: Contains the python code used to transform the data into the knowledge graph and visualize it.
-	- `extract_data/` Contains the code to extract the raw compressed reddit data into readable data.
+	- `extract_data/`: Contains the code to extract the raw compressed reddit data into readable data.
 	- `extract_entities/`: Contains the code for extracting entities and relationships for the knowledge graph.
+	- `filter_entities`: Contains the code for filtering the raw knowledge graph entities and conducting entity linking.
 	- `prep_data/`: Contains the code responsible for prepping the data for entity and relationship extraction.
-	- `utility/`: Contains code for utility functions, such as validating the presence of a GPU.
+	- `utility/`: Contains code for utility functions, such as validating the presence of a GPU and observing how Wikidata handles queries.
 ## Replication, Creating the Knowledge Graphs
 The code contained in this repository can be used to regenerate the knowledge graphs, or be slightly modified to build similar knowledge graphs for other subreddits. The steps to do so are outlined below:
 ### Step 1: Python Environment Setup
@@ -69,5 +71,5 @@ The python script relies on two configuration files:
 
 The extracted entities are often useless. For example, the entity "bro" linked to "person" is not really useful in understanding conspiracy theory structure. Furthermore, we need to conduct entity linking. This is done by:
 1. Sending our raw entities to Wikidata to find established concepts.
-2. Removing concepts that do not pass a similarity (levenstein distance) filter (e.g. if I query "Household", we would drop the result "Tractor" since it is not similar, but we would keep "House").
-3. Take the most similar concept of the remaining options (e.g. if we queried "Household" and we still have the results "Home", "Housing Crisis" and "Homestead" after implementing out similarity filter, we take "House" because it has the best similarity score).
+2. Take the most similar concept of the options (e.g. if we queried "Household" and we still have the results "Home", "Housing Crisis" and "Homestead" after implementing out similarity filter, we take "House" because it has the best similarity score).
+3. Drop the resulting concept if it does not pass a similarity (levenstein distance) filter (e.g. if I query "Household", we would drop the result "Tractor" since it is not similar, but we would keep "House").
