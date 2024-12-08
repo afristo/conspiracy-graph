@@ -234,7 +234,7 @@ def process_file(file_name, input_file_path, tokenizer, model):
     output_file_path = os.path.join(new_directory, new_filename)
 
     # Open and read the JSONL file
-    with open(input_file_path, "r") as input_file, open(output_file_path, "w") as output_file:
+    with open(input_file_path, "r") as input_file, open(output_file_path, "a") as output_file:
 
         # Set the line number for logging
         line_num = 0
