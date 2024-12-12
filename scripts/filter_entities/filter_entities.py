@@ -198,7 +198,7 @@ def process_and_link_entities(data_source_name, input_file_path, output_file_pat
         open(file=output_file_path, mode="a", encoding="utf-8") as out_file:
 
         # Set default starting line number
-        line_number = 0
+        line_number = 1
 
         # List to accumulate the triplets
         triplets = []
@@ -312,7 +312,7 @@ if __name__ == "__main__":
         logging.info("Filtering %s...", data_source)
 
         # Do not process the file if we've already processed it (e.g. "True")
-        if config[data_source]["status"]:
+        if config[data_source]["status"] is True:
 
             continue
 
@@ -332,5 +332,11 @@ if __name__ == "__main__":
 
         # Filter entities
         process_and_link_entities(data_source, input_file, output_file, line)
+
+        # Update the config with our progress
+        update_progress_config(
+            key_path=[data_source, "status"],
+            value=True
+            )
 
     logging.info("All entities filtered.")
