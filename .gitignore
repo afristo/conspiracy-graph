@@ -5,6 +5,8 @@ data/filtered_entities/*
 !data/filtered_entities/.gitkeep
 data/final_graph/*
 !data/final_graph/.gitkeep
+data/knowledge_graph/*
+!data/knowledge_graph/.gitkeep
 data/prepped_data/*
 !data/prepped_data/.gitkeep
 data/raw_data/*
