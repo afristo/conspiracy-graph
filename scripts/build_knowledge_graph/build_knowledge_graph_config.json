@@ -1,0 +1,34 @@
+{
+    "Conspiracy II Submissions Entities": {
+        "path": "./data/filtered_entites/conspiracyII_submissions_filtered_entites.jsonl",
+        "status": true
+    },
+    "Conspiracy II Comments Entities": {
+        "path": "./data/filtered_entites/conspiracyII_comments_filtered_entites.jsonl",
+        "status": true
+    },
+    "Conspiracy Theories Submissions Entities": {
+        "path": "./data/filtered_entites/conspiracytheories_submissions_filtered_entites.jsonl",
+        "status": true
+    },
+    "Conspiracy Theories Comments Entities": {
+        "path": "./data/filtered_entites/conspiracytheories_comments_filtered_entites.jsonl",
+        "status": true
+    },
+    "Conspiracy Commons Submissions Entities": {
+        "path": "./data/filtered_entites/conspiracy_commons_submissions_filtered_entites.jsonl",
+        "status": true
+    },
+    "Conspiracy Commons Comments Entities": {
+        "path": "./data/filtered_entites/conspiracy_commons_comments_filtered_entites.jsonl",
+        "status": true
+    },
+    "Conspiracy Submissions Entities": {
+        "path": "./data/filtered_entites/conspiracy_submissions_filtered_entites.jsonl",
+        "status": true
+    },
+    "Conspiracy Comments Entities": {
+        "path": "./data/filtered_entites/conspiracy_comments_filtered_entites.jsonl",
+        "status": true
+    }
+}
