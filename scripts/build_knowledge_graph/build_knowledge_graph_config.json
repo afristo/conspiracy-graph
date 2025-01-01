@@ -1,34 +1,34 @@
 {
     "Conspiracy II Submissions Entities": {
-        "path": "./data/filtered_entites/conspiracyII_submissions_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracyII_submissions_filtered_entities.jsonl",
         "status": true
     },
     "Conspiracy II Comments Entities": {
-        "path": "./data/filtered_entites/conspiracyII_comments_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracyII_comments_filtered_entities.jsonl",
         "status": true
     },
     "Conspiracy Theories Submissions Entities": {
-        "path": "./data/filtered_entites/conspiracytheories_submissions_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracytheories_submissions_filtered_entities.jsonl",
         "status": true
     },
     "Conspiracy Theories Comments Entities": {
-        "path": "./data/filtered_entites/conspiracytheories_comments_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracytheories_comments_filtered_entities.jsonl",
         "status": true
     },
     "Conspiracy Commons Submissions Entities": {
-        "path": "./data/filtered_entites/conspiracy_commons_submissions_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracy_commons_submissions_filtered_entities.jsonl",
         "status": true
     },
     "Conspiracy Commons Comments Entities": {
-        "path": "./data/filtered_entites/conspiracy_commons_comments_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracy_commons_comments_filtered_entities.jsonl",
         "status": true
     },
     "Conspiracy Submissions Entities": {
-        "path": "./data/filtered_entites/conspiracy_submissions_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracy_submissions_filtered_entities.jsonl",
         "status": true
     },
     "Conspiracy Comments Entities": {
-        "path": "./data/filtered_entites/conspiracy_comments_filtered_entites.jsonl",
+        "path": "./data/filtered_entities/conspiracy_comments_filtered_entities.jsonl",
         "status": true
     }
 }
