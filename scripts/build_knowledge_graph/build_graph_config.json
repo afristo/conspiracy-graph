@@ -1,0 +1,4 @@
+{
+    "input_directory": "./data/filtered_entities/",
+    "output_directory": "./data/knowledge_graph/"
+}
