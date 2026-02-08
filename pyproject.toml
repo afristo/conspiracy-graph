@@ -1,0 +1,14 @@
+[project]
+name = "conspiracy-graph"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fuzzywuzzy>=0.18.0",
+    "pandas>=3.0.0",
+    "requests>=2.32.5",
+    "spacy>=3.8.11",
+    "transformers>=5.1.0",
+    "zstandard>=0.25.0",
+]

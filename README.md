@@ -18,16 +18,12 @@
 ## Replication, Creating the Knowledge Graphs
 The code contained in this repository can be used to regenerate the knowledge graphs, or be slightly modified to build similar knowledge graphs for other subreddits. The steps to do so are outlined below:
 ### Step 1: Python Environment Setup
-This project was developed using Python 3.12.6. Other versions may have compatibility issues, specifically with pytorch and other dependencies.
-
-Some useful commands for setting up the python environment are included below. The requirements.txt file contains the packages used for this project as well. Package versions are locked for stability.
-- Create the python environment: ```python3 -m venv .conspiracy_graph_env```
-- Activate the environment: ```source .conspiracy_graph_env/bin/activate```
-- Update Pip: ```pip3 install --upgrade pip```
-- Install packages: `pip install {PACKAGE}`
+This project was developed using Python 3.12.6. Other versions may have compatibility issues, specifically with pytorch and other dependencies. Packages and dependencies are managed with [uv](https://docs.astral.sh/uv/). This guide assumes you have uv installed.
+- Initialize uv: ```uv init```
+- Create the python environment: ```uv venv .venv```
+- Activate the environment: ```source .venv/bin/activate``` for Linux/macOS, or ```.venv\Scripts\activate``` for Windows
+- Install packages from the lock file: ```uv sync```
 - Deactivate it: `deactivate`
-- Save packages: `pip freeze > requirements.txt`
-- Recreate environment: `pip install -r requirements.txt`
 
 If utilizing a GPU, use the [PyTorch docs](https://pytorch.org/get-started/locally/) to install the relevant torch versions and packages.
 
