@@ -1,13 +1,13 @@
 # Import native libraries
 import logging
 import json
+import sys
 import os
 
 # Import third-party libraries
 from fuzzywuzzy import fuzz
 import requests
 
-import sys
 
 # Set constant values for the script, enforcing them with a class
 class Constants:
@@ -128,13 +128,30 @@ def search_wikidata(term):
         "search": term,
     }
 
+    # Set headers
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:106.0) Gecko/20100101 Firefox/106.0"
+    }
+
     # Send the request
-    response = requests.get(url=url, params=params, timeout=15)
+    response = requests.get(
+        url=url,
+        params=params,
+        headers=headers,
+        timeout=15
+        )
 
     # If we get a successful response, return the response
     if response.status_code == 200:
 
         return response.json().get("search", [])
+
+    # If we get an unauthorized error, stop the script immediately to avoid more
+    elif response.status_code == 403:
+
+        logging.error("403 forbidden error querying Wikidata, exiting.")
+
+        sys.exit(1)
 
     logging.error("Error querying Wikidata for '%s': %s", term, response.status_code)
 
