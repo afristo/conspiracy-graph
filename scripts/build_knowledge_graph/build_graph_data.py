@@ -16,7 +16,7 @@ class Constants:
 
     CONFIG = "./scripts/build_knowledge_graph/build_graph_config.json"
     LARGE_RENORMALIZATION_THRESHOLD = 10
-    SMALL_RENORMALIZATION_THRESHOLD = 95
+    SMALL_RENORMALIZATION_THRESHOLD = 98
 
 
 def setup_logging():
