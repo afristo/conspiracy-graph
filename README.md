@@ -110,7 +110,7 @@ Progress is tracked through a configuration file, allowing the script to be safe
 By combining similarity-based filtering and entity linking, this step transforms noisy extracted entities into a refined, semantically coherent dataset. The resulting triplets are suitable for downstream tasks such as knowledge graph construction, analysis, and visualization, ensuring the final graph reflects meaningful relationships between concepts rather than irrelevant or ambiguous data.
 
 ### Step 7: Building the Knowledge Graph
-**Command:**  `uv run ./scripts/build_knowledge_graph/build_graph.py`
+**Command:**  `uv run ./scripts/build_knowledge_graph/build_graph_data.py`
 
 This script takes the filtered and linked entity triplets and constructs knowledge graphs that represent relationships between concepts. The process begins by ingesting all JSONL files from the filtered entity directory, parsing each triplet, and aggregating duplicate edges. Each unique pair of linked entities is counted to produce raw edge weights, which reflect how frequently two entities co-occur in the dataset. Self-loops, edges connecting an entity to itself, are discarded, and undirected edges are used, so that connections are counted symmetrically.
 
